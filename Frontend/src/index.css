@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #212121;
+  color: #ececec;
+  font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
