@@ -4,6 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.js";
 import chatRoutes from "./routes/chat.js";
+import voiceRoutes from "./routes/voice.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -14,6 +15,7 @@ app.use(cors());
 
 // Mount Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/voice", voiceRoutes);
 app.use("/api", chatRoutes);
 
 // Health check route --> for liveness
