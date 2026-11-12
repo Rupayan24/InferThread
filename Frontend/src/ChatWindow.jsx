@@ -12,6 +12,9 @@ export default function ChatWindow() {
     currThreadId,
     setPrevChats,
     setNewChat,
+    authFetch,
+    logoutUser,
+    user,
   } = useContext(MyContext);
 
   const [loading, setLoading] = useState(false);
@@ -28,9 +31,6 @@ export default function ChatWindow() {
 
     const options = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({
         message: userPrompt,
         threadId: currThreadId,
@@ -38,15 +38,20 @@ export default function ChatWindow() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", options);
+      const response = await authFetch(
+        "http://localhost:8080/api/chat",
+        options,
+      );
       const res = await response.json();
 
       if (!response.ok) {
-        throw new Error(
+        const errMsg =
           typeof res.error === "string"
             ? res.error
-            : `Chat request failed (${response.status})`,
-        );
+            : typeof res.message === "string"
+              ? res.message
+              : `Chat request failed (${response.status})`;
+        throw new Error(errMsg);
       }
 
       if (typeof res.reply !== "string" || !res.reply.trim()) {
@@ -76,7 +81,7 @@ export default function ChatWindow() {
 
   const handleProfileClick = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   return (
     <div className="chatWindow">
@@ -84,27 +89,44 @@ export default function ChatWindow() {
         <span>
           InferThread<i className="fa-solid fa-chevron-down"></i>
         </span>
-        <div className="userIconDiv" onClick={handleProfileClick}>
+        <div
+          className="userIconDiv"
+          onClick={handleProfileClick}
+          title={user?.username || "Profile"}
+        >
           <span className="userIcon">
             <i className="fa-solid fa-user"></i>
           </span>
         </div>
       </div>
+
       {isOpen && (
         <div className="dropDown">
+          {user?.username && (
+            <div
+              className="dropDownItem"
+              style={{ opacity: 0.75, cursor: "default" }}
+            >
+              <i className="fa-solid fa-circle-user"></i>
+              {user.username}
+            </div>
+          )}
           <div className="dropDownItem">
-            <i class="fa-solid fa-gear"></i>Settings
+            <i className="fa-solid fa-gear"></i>Settings
           </div>
           <div className="dropDownItem">
-            <i class="fa-solid fa-cloud-arrow-up"></i>Upgrade plan
+            <i className="fa-solid fa-cloud-arrow-up"></i>Upgrade plan
           </div>
-          <div className="dropDownItem">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>Log Out
+          <div className="dropDownItem" onClick={logoutUser}>
+            <i className="fa-solid fa-arrow-right-from-bracket"></i>
+            Log Out
           </div>
         </div>
       )}
+
       <Chat />
       <SyncLoader color="#fff" loading={loading} />
+
       <div className="chatInput">
         {requestError?.threadId === currThreadId && (
           <p className="chatError" role="alert">

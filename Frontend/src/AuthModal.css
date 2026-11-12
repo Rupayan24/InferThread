@@ -1,0 +1,122 @@
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 13, 18, 0.88);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.auth-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  padding: 36px 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.auth-brand h2 {
+  font-size: 1.6rem;
+  color: #f0f6fc;
+  margin: 0 0 6px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.auth-brand h2 span {
+  color: #58a6ff;
+}
+
+.auth-brand p {
+  color: #8b949e;
+  font-size: 0.875rem;
+  margin: 0 0 22px 0;
+  line-height: 1.4;
+}
+
+.auth-error-banner {
+  background: rgba(248, 81, 73, 0.12);
+  border: 1px solid #f85149;
+  color: #f85149;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.auth-field label {
+  color: #c9d1d9;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.auth-field input {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: #f0f6fc;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-field input:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  background: #238636;
+  color: #ffffff;
+  padding: 11px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s ease;
+}
+
+.auth-submit-btn:hover {
+  opacity: 0.92;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.auth-toggle {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #8b949e;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  color: #58a6ff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.toggle-btn:hover {
+  text-decoration: underline;
+}
