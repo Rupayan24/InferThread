@@ -4,6 +4,8 @@
 
 InferThread is a full-stack AI chat application built with React, Express, MongoDB, and Groq's OpenAI-compatible chat completions API. It provides a clean chat interface, saves conversations as threads, renders assistant responses as Markdown, and highlights code blocks.
 
+**Live demo:** [InferThread](https://inferthread-frontend.onrender.com/)
+
 > **Current provider implementation:** the backend currently calls Groq's OpenAI-compatible API. The provider integration is isolated in `Backend/utils/openai.js`; using another provider requires adapting that integration. `GROQ_MODEL` selects the Groq model.
 
 ## Contents
