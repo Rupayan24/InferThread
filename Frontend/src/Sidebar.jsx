@@ -1,7 +1,9 @@
 import "./Sidebar.css";
 import { useContext, useEffect } from "react";
 import { MyContext } from "./MyContext.jsx";
+import { apiUrl } from "./api.js";
 import { v1 as uuidv1 } from "uuid";
+import logo from "./assets/blacklogo.png";
 
 function Sidebar() {
   const {
@@ -18,7 +20,7 @@ function Sidebar() {
 
   const getAllThreads = async () => {
     try {
-      const response = await authFetch("http://localhost:8080/api/thread");
+      const response = await authFetch(apiUrl("/api/thread"));
       const res = await response.json();
 
       if (response.ok && Array.isArray(res)) {
@@ -52,7 +54,7 @@ function Sidebar() {
 
     try {
       const response = await authFetch(
-        `http://localhost:8080/api/thread/${newThreadId}`,
+        apiUrl(`/api/thread/${newThreadId}`),
       );
       const res = await response.json();
 
@@ -69,7 +71,7 @@ function Sidebar() {
   const deleteThread = async (threadId) => {
     try {
       const response = await authFetch(
-        `http://localhost:8080/api/thread/${threadId}`,
+        apiUrl(`/api/thread/${threadId}`),
         {
           method: "DELETE",
         },
@@ -96,7 +98,7 @@ function Sidebar() {
   return (
     <section className="sidebar">
       <button onClick={createNewChat}>
-        <img className="logo" src="src/assets/blacklogo.png" alt="gpt logo" />
+        <img className="logo" src={logo} alt="gpt logo" />
         <span>
           <i className="fa-solid fa-pen-to-square"></i>
         </span>

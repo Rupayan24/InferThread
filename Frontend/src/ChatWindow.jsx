@@ -1,6 +1,7 @@
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
+import { apiUrl } from "./api.js";
 import { useContext, useState } from "react";
 import { SyncLoader } from "react-spinners";
 
@@ -39,7 +40,7 @@ export default function ChatWindow() {
 
     try {
       const response = await authFetch(
-        "http://localhost:8080/api/chat",
+        apiUrl("/api/chat"),
         options,
       );
       const res = await response.json();

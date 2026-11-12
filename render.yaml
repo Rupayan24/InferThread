@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: inferthread-backend
+    runtime: node
+    rootDir: Backend
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GROQ_API_KEY
+        sync: false
+      - key: CORS_ORIGIN
+        value: http://localhost:5173
+
+staticSites:
+  - name: inferthread-frontend
+    rootDir: Frontend
+    buildCommand: npm ci && npm run build
+    publishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: inferthread-backend
+          property: host

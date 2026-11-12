@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { MyContext } from "./MyContext.jsx";
+import { apiUrl } from "./api.js";
 import "./AuthModal.css";
 
 const AuthModal = () => {
@@ -23,7 +24,7 @@ const AuthModal = () => {
       : { username, email, password };
 
     try {
-      const res = await fetch(`http://localhost:8080${endpoint}`, {
+      const res = await fetch(apiUrl(endpoint), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

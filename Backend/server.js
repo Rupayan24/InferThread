@@ -8,10 +8,20 @@ import voiceRoutes from "./routes/voice.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin(origin, callback) {
+      callback(null, !origin || allowedOrigins.includes(origin));
+    },
+  }),
+);
 
 // Mount Routes
 app.use("/api/auth", authRoutes);

@@ -77,21 +77,25 @@ Create `Backend/.env` with the configuration described below. Keep this file pri
 
 ## Configuration
 
-Create `Backend/.env`:
+Copy `Backend/.env.example` to `Backend/.env` and set your values:
 
 ```dotenv
 PORT=8080
 MONGODB_URI=mongodb://127.0.0.1:27017/inferthread
+JWT_SECRET=replace_with_a_long_random_secret
 GROQ_API_KEY=your_groq_api_key
 GROQ_MODEL=qwen/qwen3.8-27b
+CORS_ORIGIN=http://localhost:5173
 ```
 
 | Variable | Required | Description |
 | --- | --- | --- |
 | `PORT` | No | Backend HTTP port. Defaults to `8080`. |
 | `MONGODB_URI` | Yes | MongoDB connection string. |
+| `JWT_SECRET` | Yes | Secret used to sign and verify login tokens. |
 | `GROQ_API_KEY` | Yes | API key used to authenticate requests to Groq. |
 | `GROQ_MODEL` | No | Groq model ID. Defaults to `qwen/qwen3.8-27b` in the current backend. |
+| `CORS_ORIGIN` | No | Comma-separated frontend origins allowed to call the API. Defaults to `http://localhost:5173`. |
 
 The backend loads `.env` automatically. Do not commit API keys, database credentials, or other secrets.
 
@@ -111,7 +115,7 @@ cd Frontend
 npm run dev
 ```
 
-Open the local URL printed by Vite (typically `http://localhost:5173`). The frontend currently calls the backend at `http://localhost:8080`; set `PORT` to `8080` or update the frontend API URLs if you use a different backend address.
+Open the local URL printed by Vite (typically `http://localhost:5173`). The frontend defaults to the backend at `http://localhost:8080`; set `VITE_API_URL` in `Frontend/.env` if you use a different backend address.
 
 For a frontend production build:
 
@@ -121,6 +125,12 @@ npm run build
 ```
 
 Vite writes the production assets to `Frontend/dist`. The frontend and backend are separate applications and must each be deployed/configured for your hosting environment.
+
+## Deploying to Render
+
+The root `render.yaml` defines a Render web service for the backend and a static site for the frontend. In Render, create a new Blueprint from this repository and provide the requested `MONGODB_URI` and `GROQ_API_KEY` values. Render generates `JWT_SECRET`; the frontend API URL is connected to the backend service by the blueprint.
+
+After both services are created, copy the frontend's `https://...onrender.com` origin into the backend service's `CORS_ORIGIN` environment variable (origin only, with no trailing slash), replacing the local default, then save the change so Render redeploys the backend. Ensure your MongoDB deployment permits connections from Render. Keep secrets in Render's environment settings, not in the repository.
 
 ## API
 
